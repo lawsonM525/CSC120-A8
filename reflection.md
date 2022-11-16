@@ -3,8 +3,9 @@
 </p>
 <p>
 Abby McIlraith and Michelle Lawson are german scientists building a pirated version of a certain Swedish game that cannot be accessed in our country. We implement the Contract interface created by Jordan Crouser.
-</p>
 
+(Markdown animation adapted from DenverCoder1 on GitHub)
+</p>
 
 <h3>Brainstorming Ideas:</h3>
 
@@ -26,9 +27,12 @@ Abby McIlraith and Michelle Lawson are german scientists building a pirated vers
     - shrink change size (with limitations)
     - grow chanvfjedfvbjrfbd yeah
     - rest change awake status
-    -undo (unRest!)? print "previous action undone!"
+    - undo - checks lastAction, undoes it
+
 
 Process:
+
+After figuring out what each of our methods would do for the player, we struggled with how to implement the undo method. We decided to make a variable called lastAction that would change based on what the last method was, so that the undo method would know which method to undo. Then the undo method would call the opposite of the lastAction method (like call drop if lastAction = grab) and print an appropriate message. 
 
 
 

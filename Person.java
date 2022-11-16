@@ -191,7 +191,7 @@ public class Person implements Contract {
     public void undo(){
         // if (this.lastAction in [""]){
         //     System.out.println("Previous action undone!");
-        // }
+        // }    
         
     }
 
@@ -204,7 +204,8 @@ public class Person implements Contract {
             this.myInventory.content.remove(item);
         }
     }
-
+   
+    
     public void turnItemLeft(){
         System.out.println("Item turned left!");
     }
