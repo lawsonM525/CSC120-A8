@@ -34,5 +34,8 @@ Process:
 
 After figuring out what each of our methods would do for the player, we struggled with how to implement the undo method. We decided to make a variable called lastAction that would change based on what the last method was, so that the undo method would know which method to undo. Then the undo method would call the opposite of the lastAction method (like call drop if lastAction = grab) and print an appropriate message. 
 
+Sincerely,
+the creators of meinKraft.
+
 
 
