@@ -228,7 +228,7 @@ public class Person implements Contract {
             } else if (action[0].equals("grow")){
                 this.shrink();
             }
-        }
+        }    
         
     }
 
