@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+
+/**
+ * A person with a name and an inventory.
+ */
 public class Person implements Contract {
     Inventory myInventory;// person's personal inventory
     Boolean awake;//whether the person is awake or not
@@ -24,7 +28,10 @@ public class Person implements Contract {
             undoableActions.add("drop");
             undoableActions.add("rest");
             undoableActions.add("wake");
-            undoableActions.add("walk");
+            undoableActions.add("walk north");
+            undoableActions.add("walk south");
+            undoableActions.add("walk east");
+            undoableActions.add("walk west");
             undoableActions.add("grow");
             undoableActions.add("shrink");
     }
@@ -108,6 +115,7 @@ public class Person implements Contract {
         this.coordinates[1] = y;
         this.coordinates[2] = 0;//person is now on the ground
         System.out.println("You have landed at " + this.coordinates[0] + ", " + this.coordinates[1]);
+        this.lastAction = "fly";
         return true; // person has just flown
     }
 
@@ -145,15 +153,18 @@ public class Person implements Contract {
     public Number shrink(){
         if (this.size[0].equals("small")){//if the person is already small, do nothing
             System.out.println("You are already at your smallest size!");
+            //this.lastAction = "shrink";
             return 0;
         } else if (this.size[0].equals("medium")){//if the person is medium, change to small
             this.size[0] = "small";
             System.out.println("You are now small!");
+            this.lastAction = "shrink";
             return 1;
         } else if (this.size[0].equals("large")){//if the person is large, change to medium
             System.out.println("lastAction");
             this.size[0] = "medium";
             System.out.println("You are now medium!");
+            this.lastAction = "shrink";
             return 1;
         }
         else {
@@ -169,14 +180,17 @@ public class Person implements Contract {
     public Number grow(){
         if (this.size[0].equals("large")){
             System.out.println("You are already at your largest size!");
+            //this.lastAction = "grow";
             return 0;
         } else if (this.size[0].equals("medium")){
             this.size[0] = "large";
             System.out.println("You are now large!");
+            this.lastAction = "grow";
             return 1;
         } else if (this.size[0].equals("small")){
             this.size[0] = "medium";
             System.out.println("You are now medium!");
+            this.lastAction = "grow";
             return 1;
         }
         else{
@@ -186,17 +200,41 @@ public class Person implements Contract {
     }
 
     /**
-     * 
+     * Call opposite method of undoable actions
      */
     public void undo(){
-        // if (this.lastAction in [""]){
-        //     System.out.println("Previous action undone!");
-        // }
+        String [] action = this.lastAction.split(" ");
+        if (this.undoableActions.contains(action[0])){//if first word of last action is in undoable actions, call opposite method
+            if (action[0].equals("grab")){
+                this.drop(action[1]);
+            } else if (action[0].equals("drop")){
+                this.grab(action[1]);
+            } else if (action[0].equals("walk")){
+                if (action[1].equals("north")){
+                    this.walk("south");
+                } else if (action[1].equals("south")){
+                    this.walk("north");
+                } else if (action[1].equals("east")){
+                    this.walk("west");
+                } else if (action[1].equals("west")){
+                    this.walk("east");
+                }
+            } else if (action[0].equals("rest")){
+                this.wake();
+            } else if (action[0].equals("wake")){
+                this.rest();
+            } else if (action[0].equals("shrink")){
+                this.grow();
+            } else if (action[0].equals("grow")){
+                this.shrink();
+            }
+        }
         
     }
 
     
     /** 
+     * Consumes an item within inventory
      * @param item
      */
     public void use(String item){
@@ -205,25 +243,38 @@ public class Person implements Contract {
         }
     }
 
+    /**
+     * Turn an item left for examination
+     */
     public void turnItemLeft(){
         System.out.println("Item turned left!");
     }
 
+    /**
+     * Turn an item right for examination
+     */
     public void turnItemRight(){
         System.out.println("Item turned right!");
     }
 
+    /**
+     * Turn an item up for examination
+     */
     public void turnItemUp(){
         System.out.println("Item turned up!");
     }
 
+    /**
+     * Turn an item down for examination
+     */
     public void turnItemDown(){
         System.out.println("Item turned down!");
     }
 
     
     /** 
-     * @param item
+     * Examine an item
+     * @param item item to be examined
      */
     public void examine(String item){
         System.out.println("You are examining the " + item + ".");
